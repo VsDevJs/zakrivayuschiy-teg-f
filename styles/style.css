@@ -117,7 +117,7 @@
 }
 
 .card__title_mod-padding {
-  padding-block-end:3px; 
+  padding-block-end:3px;
 }
 
 .card__title_mod-outline {
@@ -256,13 +256,11 @@
 
 .card__icon-button {
   display: flex;
-  display: flex;
   align-items: center;
   border: none;
   padding-block-start: 2px;
   outline:2px solid transparent;
   outline-offset: -2px;
-  background-color: transparent;
   background-color: transparent;
   transition: outline .3s ease;
   appearance: none;
@@ -294,7 +292,7 @@
 .footer {
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
   padding: 50px 34px 102px 32px;
 }
 
@@ -310,7 +308,7 @@
 
 .footer__text-save {
   z-index: 2;
-  color:var(--color-accent, #fff); 
+  color:var(--color-accent, #fff);
   font-family: var(--accent-color);
   font-weight: var(--weight-regular);
   font-size: 14px;
@@ -327,7 +325,7 @@ dialog::backdrop {
 
 .footer__floppy {
   z-index: 2;
-  color:var(--color-accent, #fff); 
+  color:var(--color-accent, #fff);
   mix-blend-mode: difference;
 }
 
@@ -361,7 +359,7 @@ dialog:not([open]) {
 }
 
 .diaglog__title {
-  color: #000000; 
+  color: #000000;
   font-family: var(--accent-color);
   font-weight: 400;
   font-size: 14px;
@@ -378,7 +376,7 @@ dialog:not([open]) {
 }
 
 @media (width >= 1440px) {
-  .header { 
+  .header {
     padding: 128px 14px;
   }
 
@@ -493,7 +491,7 @@ dialog:not([open]) {
     0% {
       transform: scale(1);
     }
-    50% { 
+    50% {
       transform:scale(1.25);
     }
     100% {
@@ -512,11 +510,11 @@ dialog:not([open]) {
 /* Появление sparks */
 
 @keyframes sparks {
-  from { 
+  from {
     opacity: 0;
   }
 
-  to { 
+  to {
     opacity: 1;
   }
 }
