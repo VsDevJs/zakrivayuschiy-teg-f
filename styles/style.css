@@ -16,9 +16,13 @@
   font-size:45px;
   min-inline-size: 320px;
   min-block-size: 100dvb;
+  background-image: repeating-linear-gradient(to right, #d3d3d3 0px 2px, transparent 2px 4px),
+                    repeating-linear-gradient(to top, #d3d3d3 0px 2px, transparent 2px 4px),
+                    repeating-linear-gradient(to bottom, #e7e7e7 0%, #e7e7e7 0.01%, #1a1a1a 100%);
+  background-size: cover;
 }
 
-/*___ общие классы ___ */
+/*___ общие стили ___ */
 
 .layout-width {
   display: flex;
@@ -26,6 +30,20 @@
   margin:0 auto;
   gap:50px;
   inline-size: var(--layout-width);
+}
+
+.button {
+  display: flex;
+  font-size: 14px;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--accent-color);
+  font-weight: var(--weight-regular);
+  border-inline: 2px solid black;
+  border-block: 2px solid black;
+  background: transparent;
+  width:max-content;
+  cursor: pointer;
 }
 
 /* Возможно нужно сделать так - padding для ешеду и paragraph или  */
@@ -39,10 +57,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: aqua;
   border: 2px solid currentColor;
   gap:20px;
-  padding:120px 14px;
+  padding-inline: 14px;
+  padding-block: 120px;
+  background:white;
 }
 
 .header__title {
@@ -80,17 +99,30 @@
 
 .card {
   width:100%;
-  border:2px solid black;
+  border:2px solid currentColor;
+  background: white;
 }
 
 .card__title {
   font-family: var(--main-color);
   font-variation-settings: 'wght' var(--weight-bold);
   font-size: 18px;
-  line-height: 1.22;
-  border-block-end: 2px solid black;
+  line-height: 122%;
   color: #000;
+  border-bottom:2px solid currentColor;
   padding:5px 10px 3px;
+}
+
+.card__title_mod {
+  border-block-end:none;
+}
+
+.card__title_mod-padding { 
+  padding-block-end:4px; 
+}
+
+.card__title_mod-outline { 
+  outline: 2px solid black;
 }
 
 .card__contain-image {
@@ -101,14 +133,10 @@
 
 .card__image {
   width: 100%;
-  /* min-height: 375px; */
   object-fit: cover;
   object-position: 98% 50%;
-  min-height: 375px;
-  /* object-position: right top; */
+  min-height: 371px;
   aspect-ratio: 1 / 1;
-  border-bottom:2px solid black;
-  border-top:2px solid black;
 }
 
 /* Фильтры для img */
@@ -146,10 +174,9 @@
   font-variation-settings: 'wght' var(--weight-regular);
   position: absolute;
   inset-inline-end: 12px;
-  inset-block-start: 25px;
+  inset-block-start: 23px;
   font-size: 14px;
   line-height: 1;
-  text-transform: uppercase;
   color: #000;
   mix-blend-mode: hard-light;
   opacity: 0.5;
@@ -166,9 +193,14 @@
 .card__text-contain {
   display: flex;
   flex-direction: column;
+  border-top:2px solid currentColor;
   gap:27px;
   padding-inline:25px;
   padding-block: 25px;
+}
+
+.card__text-contain_mod { 
+  border-top:4px solid currentColor;
 }
 
 .card__text {
@@ -182,66 +214,288 @@
 .card__contain-button {
   display: flex;
   justify-content:right;
+  gap:3px;
   padding-inline: 0 25px;
   padding-block: 0 25px;
 }
 
 .card__like-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width:max-content;
-  background: transparent;
+  position: relative;
+  overflow:hidden;
   padding: 12px 35px 9px 35px;
+  max-width: 130px;
+  transition:box-shadow .3s ease;
+  appearance: none;
 }
+
+.card__like-button:focus {
+  outline: none;;
+}
+
+.card__like-button:focus-visible {
+  position: relative;
+  outline: none;
+  box-shadow: 2px 2px 0 currentColor;
+}
+
+.card__like-button::after,
+.footer__save-button::after {
+  content: '';
+  transition: translate 0.5s ease-in-out;
+  translate: -100%;
+  position: absolute;
+  background: black;
+  width:100%;
+  top: -2px;
+  height: calc(100% + 4px);
+  z-index: 1;
+}
+
+.card__like-button:hover::after,
+.footer__save-button:hover::after {
+  translate: 0;
+}
+
+
 
 .card__icon-button {
   display: flex;
   align-items: center;
   background-color: transparent;
   display: flex;
-  height: 34px;
-  border: none;
   background-color: transparent;
-  padding-inline-end: 12px;
-  padding-block-start: 6px;
+  transition: outline .3s ease;
+  outline:2px solid transparent;
+  outline-offset: -2px;
+  padding-block-start: 2px;
+  appearance: none;
+  border: none;
+}
+
+.card__icon-button:focus { 
+  outline: none;
+}
+
+.card__icon-button:focus-visible { 
+  outline:2px solid currentColor;
 }
 
 .like-icon {
-
+  max-width: 39px;
+  max-height: 36px;
 }
+
 
 .button__text {
   font-family: var( --accent-color);
   font-weight: var(--weight-regular);
   font-size: 14px;
   line-height: 90%;
-  color: #000;
+  color:var(--color-accent, #fff);
+  z-index: 2;
+  mix-blend-mode: difference;
 }
 
-.footer{ 
-  padding:54px 34px 102px 34px;
+.footer { 
+  padding: 50px 34px 102px 32px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .footer__save-button {
-  display: flex;
   flex-direction: column;
-  align-items: center;
+  position: relative;
+  overflow: hidden;
   gap:8px;
-  justify-content: center;
-  background: transparent; 
-  border:1px solid currentColor;
-  padding:15px 20.5px 15px 20.5px;
+  padding-inline: 19px;
+  padding-block: 15px;
+  background-color: white;
 }
 
 .footer__text-save { 
   font-family: var(--accent-color);
   font-weight: var(--weight-regular);
+  color:var(--color-accent, #fff);
+  mix-blend-mode: difference;
+  z-index: 2;
   font-size: 14px;
   line-height: 90%;
 }
 
+dialog::backdrop {
+  background-color: rgb(0 0 0 / 0.3);
+  backdrop-filter: blur(7px);
+}
 
+/* ___стили dialog___ */
+
+.footer__floppy { 
+  mix-blend-mode: difference;
+  z-index: 2;
+  color:var(--color-accent, #fff);
+}
+
+.dialog {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  flex-direction: column;
+  gap: 30px;
+  max-width:341px;
+  padding-block: 30px;
+  padding-inline-start: 39px;
+  padding-inline-end: 42px;
+  border: 2px solid currentColor;
+}
+
+dialog:not([open]) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dialog__form { 
+  font-size:0;
+}
+
+.dialog__contain {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap:18px;
+}
+
+.diaglog__title { 
+  font-family: var(--accent-color);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  text-transform: uppercase;
+  color: #000000;
+}
+
+.button__dialog {
+  padding:10.5px 112.5px;
+  font-family: var(--accent-color);
+  font-weight: var(--weight-regular);
+  line-height: 90%;
+  text-transform: uppercase;
+}
+
+@media (width >= 1440px) {
+  .header { 
+    padding: 128px 14px;
+  }
+
+  .footer__save-button {
+    flex-direction: row;
+    border:2px solid black;
+    padding: 15px 20px;
+  }
+
+  .footer__floppy {
+    width:21px;
+    height:21px;
+  }
+}
+
+/* ___Like - SVG___  */
+
+.sparks {
+  opacity:0;
+}
+
+.core {
+  fill:transparent;
+  transition: fill 0.3s;
+  transition-delay: 0.03s;
+}
+
+.like-icon:hover .core {
+  fill:var(--contour-color, black);
+  transition: fill 0.3s;
+}
+
+.like-icon:active .core {
+  fill:var(--animation-fill-color, red);
+  transition: fill 0.3s;
+}
+
+.like-icon.is-liked .core {
+  fill:var(--animation-fill-color, red);
+  transition: fill 0.3s;
+}
+
+.main-body {
+  fill:transparent;
+  transition: fill 0.3s;
+}
+
+.like-icon:hover .main-body {
+  transition:fill 0.3s;
+  transition-delay: 0.05s;
+  fill:var(--contour-color, black);
+}
+
+.like-icon:active .main-body {
+  transition:fill 0.3s;
+  transition-delay: 0.05s;
+  fill:var(--animation-fill-color, red);
+}
+
+.like-icon.is-liked .main-body { 
+  transition:fill 0.3s;
+  transition-delay: 0.05s;
+  fill:var(--animation-fill-color, red);
+}
+
+/* Перекрашиваем сердцевину и основное тело */
+
+.contour {
+  transition-delay: 0s;
+  transition:fill 0.1s;
+}
+
+.like-icon.is-liked .contour {
+  fill:var(--animation-fill-color, red);
+  transition:fill 0.3s;
+  transition-delay: 0.06s;
+}
+
+/* Масштабирование .heart */
+
+@keyframes heart {
+    0% {
+      transform: scale(1);
+    }
+    50% { 
+      transform:scale(1.25);
+    }
+    100% {
+      transform:scale(1);
+    }
+}
+
+.like-icon.is-liked .heart {
+
+  /* Т.к у svg точка отчета 0 0 */
+
+  transform-origin: center;
+  animation: heart 0.3s 0.1s ease-in;
+}
+
+/* Появление sparks */
+
+@keyframes sparks {
+  from { 
+    opacity: 0;
+  }
+
+  to { 
+    opacity: 1;
+  }
+}
+
+.like-icon.is-liked .sparks { 
+  animation: sparks 0.3s 0.3s ease-in;
+}
