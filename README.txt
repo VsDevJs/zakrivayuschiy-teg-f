@@ -1,0 +1,1 @@
+https://vsdevjs.github.io/zakrivayuschiy-teg-f/
