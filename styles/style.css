@@ -16,6 +16,7 @@
                     repeating-linear-gradient(to top, #d3d3d3 0px 2px, transparent 2px 4px),
                     repeating-linear-gradient(to bottom, #e7e7e7 0%, #e7e7e7 0.01%, #1a1a1a 100%);
   background-size: cover;
+  background-attachment: fixed;
   font-variation-settings: 'wght' var(--weight-regular);
   min-inline-size: 320px;
   min-block-size: 100dvb;
@@ -33,6 +34,7 @@
 
 .button {
   display: flex;
+  position: relative; 
   justify-content: center;
   align-items: center;
   width:max-content;
@@ -41,8 +43,23 @@
   font-family: var(--accent-color);
   font-weight: var(--weight-regular);
   font-size: 14px;
+  padding: 12.5px 35px 9px 35px;
   background: transparent;
   cursor: pointer;
+  overflow:hidden; 
+  appearance: none;
+  outline: none;
+  transition:box-shadow .3s ease;
+}
+
+.button__text {
+  z-index: 2;
+  color:var(--color-accent, #fff);
+  font-family: var( --accent-color);
+  font-weight: var(--weight-regular);
+  font-size: 14px;
+  line-height: 90%;
+  mix-blend-mode: difference;
 }
 
 /* Возможно нужно сделать так - padding для ешеду и paragraph или  */
@@ -71,7 +88,6 @@
   line-height: 1;
   text-align: center;
   text-transform: uppercase;
-  font-variation-settings: 'wght' var(--weight-regular);
 }
 
 .header__paragraph {
@@ -81,7 +97,6 @@
   line-height: 1;
   text-align: center;
   text-transform: uppercase;
-  font-variation-settings: 'wght' var(--weight-regular);
 }
 
 .welcome {
@@ -152,6 +167,10 @@
   filter: hue-rotate(38deg);
 }
 
+.card__hue-rotate { 
+  filter: hue-rotate(320deg)
+}
+
 .card__image_sepia {
   filter: sepia(89%);
 }
@@ -180,11 +199,12 @@
   inset-inline-end: 12px;
   inset-block-start: 25px;
   mix-blend-mode: hard-light;
-  -webkit-text-stroke: 1px white;
 }
 
 @supports (text-stroke: 1px white) {
   .card__label {
+    text-shadow:none;
+    -webkit-text-stroke: 1px white;
     text-stroke: 1px white;
   }
 } 
@@ -218,41 +238,35 @@
 }
 
 .card__like-button {
-  position: relative;
   max-width: 130px;
-  padding: 12px 35px 9px 35px;
-  overflow:hidden;
-  transition:box-shadow .3s ease;
-  appearance: none;
+  padding-inline: 35px;
 }
 
-.card__like-button:focus {
-  outline: none;;
-}
-
-.card__like-button:focus-visible {
-  position: relative;
-  box-shadow: 2px 2px 0 currentColor;
+.button:focus {
   outline: none;
 }
 
-.card__like-button::after,
-.footer__save-button::after {
+.button:focus-visible {
+  box-shadow: 2px 2px 0 currentColor;
+}
+
+.button:not(.button__dialog)::after {
   content: '';
   position: absolute;
   top: -2px;
   z-index: 1;
   width:100%;
   height: calc(100% + 4px);
-  background: black;
+  background: #000;
   transition: translate 0.5s ease-in-out;
   translate: -100%;
 }
 
-.card__like-button:hover::after,
-.footer__save-button:hover::after {
+.button:not(.button__dialog):hover::after {
   translate: 0;
 }
+
+/* button для like */
 
 .card__icon-button {
   display: flex;
@@ -264,6 +278,7 @@
   background-color: transparent;
   transition: outline .3s ease;
   appearance: none;
+  cursor: pointer;
 }
 
 .card__icon-button:focus {
@@ -279,24 +294,14 @@
   max-height: 36px;
 }
 
-.button__text {
-  z-index: 2;
-  color:var(--color-accent, #fff);
-  font-family: var( --accent-color);
-  font-weight: var(--weight-regular);
-  font-size: 14px;
-  line-height: 90%;
-  mix-blend-mode: difference;
-}
-
-.footer {
+.contain-save-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 50px 34px 102px 32px;
+  padding: 0 34px 102px 32px;
 }
 
-.footer__save-button {
+.contain-save-button__save-button {
   position: relative;
   flex-direction: column;
   gap:8px;
@@ -316,18 +321,13 @@
   mix-blend-mode: difference;
 }
 
-dialog::backdrop {
-  background-color: rgb(0 0 0 / 0.3);
-  backdrop-filter: blur(7px);
-}
-
-/* ___стили dialog___ */
-
-.footer__floppy {
+.contain-save-button__floppy {
   z-index: 2;
   color:var(--color-accent, #fff);
   mix-blend-mode: difference;
 }
+
+/* ___стили dialog___ */
 
 .dialog {
   position: fixed;
@@ -341,6 +341,12 @@ dialog::backdrop {
   padding-inline-end: 42px;
   padding-block: 30px;
 }
+
+dialog::backdrop {
+  background: #000;
+  opacity: 0.75;
+}
+
 
 dialog:not([open]) {
   opacity: 0;
@@ -368,9 +374,7 @@ dialog:not([open]) {
 }
 
 .button__dialog {
-  padding:10.5px 112.5px;
-  font-family: var(--accent-color);
-  font-weight: var(--weight-regular);
+  padding-inline: 112.5px;
   line-height: 90%;
   text-transform: uppercase;
 }
@@ -380,13 +384,12 @@ dialog:not([open]) {
     padding: 128px 14px;
   }
 
-  .footer__save-button {
+  .contain-save-button__save-button {
     flex-direction: row;
-    border:2px solid black;
-    padding: 15px 20px;
+    padding-inline:20px;
   }
 
-  .footer__floppy {
+  .contain-save-button__floppy {
     width:21px;
     height:21px;
   }
@@ -408,17 +411,17 @@ dialog:not([open]) {
 
   .card__title_mod {
   border-block-end:none;
-}
+  }
   .boder__bottom-mod {
     border-top: 1px solid currentColor;
   }
 
-.card__title_mod-padding {
-  padding-block-end: 5px;
-}
+  .card__title_mod-padding {
+    padding-block-end: 5px;
+  }
 
-.card__title_mod-outline {
-  outline: none;
+  .card__title_mod-outline {
+    outline: none;
 }
 }
 
@@ -485,38 +488,12 @@ dialog:not([open]) {
   transition-delay: 0.06s;
 }
 
-/* Масштабирование .heart */
-
-@keyframes heart {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform:scale(1.25);
-    }
-    100% {
-      transform:scale(1);
-    }
-}
-
 .like-icon.is-liked .heart {
 
   /* Т.к у svg точка отчета 0 0 */
 
   transform-origin: center;
   animation: heart 0.3s 0.1s ease-in;
-}
-
-/* Появление sparks */
-
-@keyframes sparks {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
 }
 
 .like-icon.is-liked .sparks {

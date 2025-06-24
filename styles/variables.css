@@ -1,11 +1,11 @@
 /* В этом файле будут храниться все значения переменных в исходном состоянии, а так же их изменения в зависимости от ширины устройства */
 :root {
-  --accent-color: 'PressStart2P-Regular';
+  --accent-color: 'PressStart2P';
   --main-color: 'Inter-Variable';
   --weight-regular:400;
   --weight-bold:700;
   --layout-width:clamp(375px, 100%, 700px);
   --color-accent:#fff;
-  --contour-color:black;
+  --contour-color:#000;
   --animation-fill-color:#FF0000;
 }
